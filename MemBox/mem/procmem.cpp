@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "procmem.hpp"
 
-
 namespace MemBox 
 {
 	std::expected<size_t, int> ProcessMemory::Read(uintptr_t address, void* source, size_t size)
@@ -17,15 +16,19 @@ namespace MemBox
 		return bytesRead;
 #elif __linux__
 		// Linux implementation todo
-		long data = ptrace(PTRACE_PEEKDATA, process.GetId(), address, NULL);
 
-		if (data == -1)
+		struct iovec local { .iov_base = source, .iov_len = size };
+		struct iovec remote { .iov_base = reinterpret_cast<void*>(address), .iov_len = size };
+
+		ssize_t nread = process_vm_readv(process.GetId(), &local, 1, &remote, 1, 0);
+
+		if (nread == -1 || nread != static_cast<ssize_t>(size))
 		{
 			// Couldn't peek data
 			return std::unexpected(errno);
 		}
 
-		*source = data;
+		return static_cast<ssize_t>(nread);
 #endif
 	}
 
@@ -52,6 +55,20 @@ namespace MemBox
 		}
 #elif __linux__
 		// Linux implementation todo
+		struct iovec local 
+		{
+			.iov_base = const_cast<void*>(source),
+			.iov_len = size
+		};
+		struct iovec remote 
+		{
+			.iov_base = reinterpret_cast<void*>(address),
+			.iov_len = size
+		};
+
+		ssize_t nwritten = process_vm_writev(pid, &local, 1, &remote, 1, 0);
+		if (nwritten != static_cast<ssize_t>(size))
+			return errno;
 #endif
 
 		return 0;

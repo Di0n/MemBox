@@ -25,6 +25,18 @@
     <Filter Include="Source Files\logging">
       <UniqueIdentifier>{e8fdfa98-3bb7-458d-9358-6404655aa407}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\exceptions">
+      <UniqueIdentifier>{7fa1b18d-09e9-4596-b389-680bb8ab3e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{5e387560-9f19-4113-b754-c99ffe4faa89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\libs">
+      <UniqueIdentifier>{fbff01d4-55d3-4471-b6da-50837d1cd519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\libs\utf8">
+      <UniqueIdentifier>{0be59cc0-776c-41df-a0f6-f8b5e7e4f727}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -33,20 +45,53 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="procmem.hpp">
-      <Filter>Header Files\mem</Filter>
-    </ClInclude>
-    <ClInclude Include="logger.hpp">
-      <Filter>Header Files\logging</Filter>
-    </ClInclude>
-    <ClInclude Include="proc.hpp">
-      <Filter>Header Files\mem</Filter>
-    </ClInclude>
     <ClInclude Include="pointerpath.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="types.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="membox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="logging\logger.hpp">
+      <Filter>Header Files\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="mem\proc.hpp">
+      <Filter>Header Files\mem</Filter>
+    </ClInclude>
+    <ClInclude Include="mem\procmem.hpp">
+      <Filter>Header Files\mem</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\stringutils.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\utf8.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\utf8\checked.h">
+      <Filter>Header Files\libs\utf8</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\utf8\core.h">
+      <Filter>Header Files\libs\utf8</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\utf8\cpp11.h">
+      <Filter>Header Files\libs\utf8</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\utf8\cpp17.h">
+      <Filter>Header Files\libs\utf8</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\utf8\cpp20.h">
+      <Filter>Header Files\libs\utf8</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\utf8\unchecked.h">
+      <Filter>Header Files\libs\utf8</Filter>
+    </ClInclude>
+    <ClInclude Include="exceptions\process_exceptions.hpp">
+      <Filter>Header Files\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="exceptions\exception.hpp">
+      <Filter>Header Files\exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,13 +101,13 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="procmem.cpp">
-      <Filter>Source Files\mem</Filter>
-    </ClCompile>
-    <ClCompile Include="logger.cpp">
+    <ClCompile Include="logging\logger.cpp">
       <Filter>Source Files\logging</Filter>
     </ClCompile>
-    <ClCompile Include="proc.cpp">
+    <ClCompile Include="mem\proc.cpp">
+      <Filter>Source Files\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="mem\procmem.cpp">
       <Filter>Source Files\mem</Filter>
     </ClCompile>
   </ItemGroup>

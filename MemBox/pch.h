@@ -10,7 +10,7 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 #include <string>
-#include "logger.hpp"
+#include "logging\logger.hpp"
 #include "types.hpp"
 
 #endif //PCH_H

@@ -1,5 +1,4 @@
 #pragma once
-#include "pch.h"
 #include <functional>
 
 namespace MemBox
@@ -14,6 +13,16 @@ namespace MemBox
 
 	using LogCallback = std::function<void(LogLevel, const std::string&)>;
 
+	/// <summary>
+	/// Sets logger callback function
+	/// </summary>
+	/// <param name="callback"></param>
 	void SetLogger(LogCallback callback);
+
+	/// <summary>
+	/// Log a message with a specified log level
+	/// </summary>
+	/// <param name="level"></param>
+	/// <param name="message"></param>
 	void Log(LogLevel level, const std::string& message);
 }

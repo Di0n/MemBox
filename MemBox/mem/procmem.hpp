@@ -1,5 +1,4 @@
 #pragma once
-#include "pch.h"
 #include "proc.hpp"
 #include <expected>
 
@@ -25,7 +24,7 @@ namespace MemBox
 		/// <param name="source"></param>
 		/// <param name="size"></param>
 		/// <returns>Returns an std::expected with either the read size or an error code</returns>
-		std::expected<size_t, int> Read(uintptr_t address, void* source, size_t size);
+		std::expected<size_t, int> Read(uintptr_t address, void* buffer, size_t size);
 
 		/// <summary>
 		/// Writes data buffer to specified memory address
@@ -54,6 +53,8 @@ namespace MemBox
 		template<typename T>
 		int Read(uintptr_t address, T& val)
 		{
+			static_assert(std::is_trivially_copyable_v<T>, "T must be trivially copyable");
+
 #ifdef _WIN32
 			SIZE_T bytesRead = 0;
 			BOOL success = ReadProcessMemory(process.GetHandle(), reinterpret_cast<LPCVOID>(address), &val, sizeof(T), &bytesRead);
@@ -63,6 +64,16 @@ namespace MemBox
 			}
 #elif __linux__
 			// Linux implementation todo
+			struct iovec local { .iov_base = &val, .iov_len = sizeof(T) };
+			struct iovec remote { .iov_base = reinterpret_cast<void*>(address), .iov_len = sizeof(T) };
+
+			ssize_t nread = process_vm_readv(process.GetId(), &local, 1, &remote, 1, 0);
+
+			if (nread == -1 || nread != static_cast<ssize_t>(size))
+			{
+				// Couldn't peek data
+				return errno;
+			}
 #endif
 			return 0;
 		}
@@ -77,6 +88,7 @@ namespace MemBox
 		template<typename T>
 		int Write(uintptr_t address, const T& val)
 		{
+			static_assert(std::is_trivially_copyable_v<T>, "T must be trivially copyable");
 
 #ifdef _WIN32
 			SIZE_T bytesWritten = 0;
@@ -100,6 +112,21 @@ namespace MemBox
 			}
 		#elif __linux__
 			// Linux implementation todo
+			struct iovec local 
+			{
+				.iov_base = const_cast<T*>(&val),
+				.iov_len = sizeof(T)
+			};
+			struct iovec remote
+			{
+				.iov_base = reinterpret_cast<void*>(address),
+				.iov_len = sizeof(T)
+			};
+
+			ssize_t nwritten = process_vm_writev(process.GetId(), &local, 1, &remote, 1, 0);
+			if (nwritte == -1 || nwritten != sizeof(T)) {
+				return errno;
+			}
 		#endif
 
 			return 0;

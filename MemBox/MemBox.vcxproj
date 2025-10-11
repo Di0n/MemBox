@@ -111,6 +111,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp23</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,25 +137,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="exceptions\exception.hpp" />
+    <ClInclude Include="exceptions\process_exceptions.hpp" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="logger.hpp" />
+    <ClInclude Include="libs\utf8.h" />
+    <ClInclude Include="libs\utf8\checked.h" />
+    <ClInclude Include="libs\utf8\core.h" />
+    <ClInclude Include="libs\utf8\cpp11.h" />
+    <ClInclude Include="libs\utf8\cpp17.h" />
+    <ClInclude Include="libs\utf8\cpp20.h" />
+    <ClInclude Include="libs\utf8\unchecked.h" />
+    <ClInclude Include="logging\logger.hpp" />
+    <ClInclude Include="membox.hpp" />
+    <ClInclude Include="mem\proc.hpp" />
+    <ClInclude Include="mem\procmem.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="pointerpath.hpp" />
-    <ClInclude Include="proc.hpp" />
-    <ClInclude Include="procmem.hpp" />
     <ClInclude Include="types.hpp" />
+    <ClInclude Include="utils\stringutils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="logger.cpp" />
+    <ClCompile Include="logging\logger.cpp" />
+    <ClCompile Include="mem\proc.cpp" />
+    <ClCompile Include="mem\procmem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="proc.cpp" />
-    <ClCompile Include="procmem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
